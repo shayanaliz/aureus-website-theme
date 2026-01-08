@@ -202,3 +202,18 @@ function getColorThemes() {
 window.addEventListener("DOMContentLoaded", (event) => {
   getColorThemes();
 });
+
+document.addEventListener("colorThemesReady", () => {
+  $("[data-animate-theme-to]").each(function () {
+    let theme = $(this).attr("data-animate-theme-to");
+
+    ScrollTrigger.create({
+      trigger: $(this),
+      start: "top 10%",
+      end: "bottom 10%",
+      onToggle: ({ self, isActive }) => {
+        if (isActive) gsap.to(".navbar_component-wrapper", { ...colorThemes.getTheme(theme) });
+      }
+    });
+  });
+});
